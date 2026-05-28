@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        //get a random number from math.random 
+        function getComputerChoice() {
+            random = getRandomInt(3);
+            console.log(random)
+            if (random === 0){
+                choice = "rock";
+            }
+            else if (random === 1){
+                choice = "scissors";
+            }
+            else{ choice = "paper";
+
+            }
+            return choice;
+        }
+        function getHumanChoice(userChoice){            
+            if (userChoice === "rock"){
+                choice = "rock";
+            }
+            else if (userChoice === "scissors"){
+                choice = "scissors";
+            }
+            else if (userChoice === "paper"){
+                choice = "scissors";
+
+            }
+            return choice;
+        }
+    
+        let userChoice =prompt("Please enter rock, paper or scissors to see if you win against the CPU");
+        userChoice.toLowerCase();
+        
+        console.log(getHumanChoice(userChoice))
+        console.log(getComputerChoice());
+        //this number will select which string
+        //the string thats picked will be computers answer
+        //put t hat into console . log
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
