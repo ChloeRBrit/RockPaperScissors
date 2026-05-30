@@ -6,46 +6,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script>
+        //the function the get random number for computer
         function getRandomInt(max) {
             return Math.floor(Math.random() * max);
         }
         //get a random number from math.random 
         function getComputerChoice() {
+            //gets a random number can only get up to 3 so that would be 0,1,2
             random = getRandomInt(3);
-            console.log(random)
+            //if it gets 0 it chooses rock
             if (random === 0){
                 choice = "rock";
             }
+            //if it gets 1 it chooses scissors
             else if (random === 1){
                 choice = "scissors";
             }
+            //anything else aka 2 would be paper
             else{ choice = "paper";
 
             }
+            //returning the choice so we can call it later
             return choice;
         }
-        function getHumanChoice(userChoice){            
+        //this is how we get the human choice it takes a entry from the human
+        function getHumanChoice(userChoice){
+            //if human types rock they will pick rock            
             if (userChoice === "rock"){
                 choice = "rock";
             }
+
             else if (userChoice === "scissors"){
                 choice = "scissors";
             }
             else if (userChoice === "paper"){
-                choice = "scissors";
+                choice = "paper";
 
             }
             return choice;
         }
-    
+        //this is how we get the choice for our function
         let userChoice =prompt("Please enter rock, paper or scissors to see if you win against the CPU");
+        //whatever the user types it puts it into lowercase so theres no need to worry about it being the wrong thing
         userChoice.toLowerCase();
         
-        console.log(getHumanChoice(userChoice))
-        console.log(getComputerChoice());
-        //this number will select which string
-        //the string thats picked will be computers answer
-        //put t hat into console . log
+        //making the computer choice a variable
+        const computerPick = getComputerChoice();
+        
+        //inzializing the scores
+        let humanScore = 0;
+        let computerScore =0;
+        //playing the game
+        function playRound(humanChoice, computerChoice){
+            //only going through the human ones because the rest would be computer wins or a tie which is simulated down farther
+            if (humanChoice === "rock" && computerChoice === "scissors"){
+                humanScore = humanScore + 1;
+                console.log("You win! " + humanChoice + " beats " + computerChoice);
+            }
+            else if (humanChoice === "scissor" && computerChoice === "paper"){
+                humanScore = humanScore + 1;
+                console.log("You win! " + humanChoice + " beats " + computerChoice);
+            }
+            else if (humanChoice ==="paper" && computerChoice ==="rock"){
+                humanScore = humanScore + 1;
+                console.log("You win! " + humanChoice + " beats " + computerChoice);
+            }
+            else if (humanChoice === computerChoice ){
+                console.log("tie");
+            }
+            else{
+                //if the rest fail then we know the computer won and we print out how it won and give it a point
+                console.log("You lose! " + computerChoice + " beats " + humanChoice)
+                computerscore = computerScore + 1;
+            }
+        }
+        console.log("you chose " + userChoice);
+        console.log("comupter chose " + computerPick);
+        playRound(userChoice, computerPick);
+        console.log("Your score " + humanScore);
+        console.log("Computer score " + computerScore);
     </script>
 </head>
 
