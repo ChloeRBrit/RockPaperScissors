@@ -6,85 +6,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script>
-        //the function the get random number for computer
+        //function to get a random number between 0 and whatever is inputted
         function getRandomInt(max) {
             return Math.floor(Math.random() * max);
         }
-        //get a random number from math.random 
+        //the function to get computer choice
+        //takes in whatever int you put then finds a number between them randomly
+        //as you can see its only going to 2 since the max is 3 points. it would be  0 1 2
+        //this is how it chooses randomly the attack
         function getComputerChoice() {
-            //gets a random number can only get up to 3 so that would be 0,1,2
-            random = getRandomInt(3);
-            //if it gets 0 it chooses rock
-            if (random === 0){
-                choice = "rock";
+            const random = getRandomInt(3);
+            if (random === 0) {
+                return "rock";
+            } else if (random === 1) {
+                return "scissors";
             }
-            //if it gets 1 it chooses scissors
-            else if (random === 1){
-                choice = "scissors";
-            }
-            //anything else aka 2 would be paper
-            else{ choice = "paper";
-
-            }
-            //returning the choice so we can call it later
-            return choice;
+            return "paper";
         }
-        //this is how we get the human choice it takes a entry from the human
-        function getHumanChoice(userChoice){
-            //if human types rock they will pick rock            
-            if (userChoice === "rock"){
-                choice = "rock";
+        //this is how we get the human choice.
+        //first we prompt the human to give us a choice
+        //if theres nothing it wont do anything, but if there is something the first thing is to lowercase it
+        //then we check if its rock, paper or scissors
+        function getHumanChoice() {
+            let userChoice = prompt("Please enter rock, paper or scissors to see if you win against the CPU");
+            if (!userChoice) {
+                return null;
+            }
+            userChoice = userChoice.toLowerCase().trim();
+            if (userChoice === "rock" || userChoice === "paper" || userChoice === "scissors") {
+                return userChoice;
+            }
+            return null;
+        }
+        //this is how we play 1 single round of RPS.
+        //first we check if its a tie by seeing if they are the same.
+        //then we check if the human wins with the 3 choices it can make
+        //if human wins we return human and give them a winner message
+        // if the computer wins we give them a loser message and retuen computer
+        function playRound(humanChoice, computerChoice) {
+            if (humanChoice === computerChoice) {
+                return {
+                    winner: "tie",
+                    message: "Tie! Both chose " + humanChoice
+                };
+            }
+            if (
+                (humanChoice === "rock" && computerChoice === "scissors") ||
+                (humanChoice === "scissors" && computerChoice === "paper") ||
+                (humanChoice === "paper" && computerChoice === "rock")
+            ) {
+                return {
+                    winner: "human",
+                    message: "You win! " + humanChoice + " beats " + computerChoice
+                };
+            }
+            return {
+                winner: "computer",
+                message: "You lose! " + computerChoice + " beats " + humanChoice
+            };
+        }
+        //this is how we play a game of 5 rounds
+        //We intialize the variables for the score
+        //then for each round we get a random computer choice
+        //then we are getting out human choice and checking if its right.
+        //we then check the result of each round played then increment the scores based on the returns from earlier
+        //after each round we print a couple things so the human sees whats going on
+        //at the end we print who won the game
+        function playGame() {
+
+            let humanScore = 0;
+            let computerScore = 0;
+
+            for (let round = 1; round <= 5; round++) {
+                const computerChoice = getComputerChoice();
+                const humanChoice = getHumanChoice();
+                const result = playRound(humanChoice, computerChoice);
+
+                if (result.winner === "human") {
+                    humanScore += 1;
+                } else if (result.winner === "computer") {
+                    computerScore += 1;
+                }
+
+                console.log("Round " + round + ": " + result.message);
+                console.log("You chose " + humanChoice);
+                console.log("Computer chose " + computerChoice);
+                console.log("Your score " + humanScore);
+                console.log("Computer score " + computerScore);
             }
 
-            else if (userChoice === "scissors"){
-                choice = "scissors";
-            }
-            else if (userChoice === "paper"){
-                choice = "paper";
-
-            }
-            return choice;
+            console.log("Final score: You " + humanScore + " - Computer " + computerScore);
         }
-        //this is how we get the choice for our function
-        let userChoice =prompt("Please enter rock, paper or scissors to see if you win against the CPU");
-        //whatever the user types it puts it into lowercase so theres no need to worry about it being the wrong thing
-        userChoice.toLowerCase();
-        
-        //making the computer choice a variable
-        const computerPick = getComputerChoice();
-        
-        //inzializing the scores
-        let humanScore = 0;
-        let computerScore =0;
-        //playing the game
-        function playRound(humanChoice, computerChoice){
-            //only going through the human ones because the rest would be computer wins or a tie which is simulated down farther
-            if (humanChoice === "rock" && computerChoice === "scissors"){
-                humanScore = humanScore + 1;
-                console.log("You win! " + humanChoice + " beats " + computerChoice);
-            }
-            else if (humanChoice === "scissor" && computerChoice === "paper"){
-                humanScore = humanScore + 1;
-                console.log("You win! " + humanChoice + " beats " + computerChoice);
-            }
-            else if (humanChoice ==="paper" && computerChoice ==="rock"){
-                humanScore = humanScore + 1;
-                console.log("You win! " + humanChoice + " beats " + computerChoice);
-            }
-            else if (humanChoice === computerChoice ){
-                console.log("tie");
-            }
-            else{
-                //if the rest fail then we know the computer won and we print out how it won and give it a point
-                console.log("You lose! " + computerChoice + " beats " + humanChoice)
-                computerscore = computerScore + 1;
-            }
-        }
-        console.log("you chose " + userChoice);
-        console.log("comupter chose " + computerPick);
-        playRound(userChoice, computerPick);
-        console.log("Your score " + humanScore);
-        console.log("Computer score " + computerScore);
+        //this is us calling the functon to actually start the RPS
+        playGame();
     </script>
 </head>
 
